@@ -1,16 +1,15 @@
 import requests
-print(requests.__version__)
 
-url_template = "https://wttr.in/{}?nTqm&lang=ru"
+def main():
 
-offices = ["Лондон", "SVO", "Череповец"]
+    url_template = "https://wttr.in/{}"
+    locations = ["London", "SVO", "Cherepovets"]
+    payload = {"n" : "", "T" : "", "q" : "", "m" : "", "lang" : "ru"}
 
-for o in offices:
-    
-    url = url_template.format(o)
-    response = requests.get(url)
-    
-    if response.ok:
+    for location in locations:
+        url = url_template.format(location)
+        response = requests.get(url, params=payload)
         print(response.text)
-    else:
-        print("Check the problem")
+
+if __name__ == '__main__':
+    main()
