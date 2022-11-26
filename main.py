@@ -1,6 +1,14 @@
 import requests
 
 
+def get_forecast(url, params):
+
+    response = requests.get(url, params=params)
+    response.raise_for_status()
+
+    return response.text
+
+
 def main():
 
     url_template = "https://wttr.in/{}"
@@ -10,11 +18,9 @@ def main():
     for location in locations:
         try:
             url = url_template.format(location)
-            response = requests.get(url, params=payload)
-            response.raise_for_status()
-            print(response.text)
-        except (requests.exceptions.ConnectionError):
-            print("Check your internet connection or accessibility of url.")
+            print(get_forecast(url, payload))
+        except requests.exceptions.ConnectionError as error:
+            exit("Can't get data from server:\n{0}".format(error))
 
 
 if __name__ == '__main__':
