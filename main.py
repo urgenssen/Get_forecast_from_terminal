@@ -11,6 +11,7 @@ def main():
         try:
             url = url_template.format(location)
             response = requests.get(url, params=payload)
+            response.raise_for_status()
             print(response.text)
         except (requests.exceptions.ConnectionError):
             print("Check your internet connection or accessibility of url.")
