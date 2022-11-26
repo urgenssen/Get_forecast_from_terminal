@@ -1,26 +1,21 @@
 import requests
 
 
-def get_forecast(url, params):
-
-    response = requests.get(url, params=params)
-    response.raise_for_status()
-
-    return response.text
-
-
 def main():
 
-    url_template = "https://wttr.in/{}"
+    url_template = "https://wttrZ.in/{}"
     locations = ["London", "SVO", "Cherepovets"]
     payload = {"n": "", "T": "", "q": "", "m": "", "lang": "ru"}
 
     for location in locations:
         try:
             url = url_template.format(location)
-            print(get_forecast(url, payload))
+            response = requests.get(url, params=payload)
+            response.raise_for_status()
+            print(response.text)
         except requests.exceptions.ConnectionError as error:
-            exit("Can't get data from server:\n{0}".format(error))
+            print("Can't get data from server.\nFor {0} is:\n{1}\n"
+                  .format(url, error))
 
 
 if __name__ == '__main__':
